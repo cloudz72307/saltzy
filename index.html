@@ -55,6 +55,9 @@
             background: var(--surface-hover);
             padding: 6px;
             border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .brand-name {
@@ -276,7 +279,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="initProxy()">
 
     <!-- Sidebar Navigation -->
     <aside>
@@ -308,7 +311,7 @@
                         <div class="tile-desc">Web Port</div>
                     </div>
                 </div>
-                <div class="game-tile" onclick="launchGame('Slope', 'https://mrking5.github.io/slope/')">
+                <div class="game-tile" onclick="launchGame('Slope', 'https://slopeonlinegame.github.io/')">
                     <div class="tile-icon">🟢</div>
                     <div class="tile-details">
                         <div class="tile-title">Slope</div>
@@ -333,7 +336,7 @@
         <div id="view-proxy" class="view-panel">
             <div class="panel-heading">Web Proxy</div>
             <div class="proxy-bar">
-                <input type="text" id="proxy-url" class="proxy-input" placeholder="Search or enter URL...">
+                <input type="text" id="proxy-url" class="proxy-input" value="https://www.google.com" placeholder="Search or enter URL...">
                 <button class="proxy-submit" onclick="executeProxy()">Load</button>
             </div>
             <div class="proxy-screen">
@@ -343,8 +346,13 @@
     </main>
 
     <script>
-        // Scramjet routing setup using deployment target configuration
-        const scramjetBase = "https://cloudz72307-abc-learning-time.hf.space/service/"; // Standard endpoint structure for hosting templates
+        const scramjetBase = "https://cloudz72307-abc-learning-time.hf.space/";
+
+        function initProxy() {
+            // Automatically queue Google as the initial default load state
+            document.getElementById('proxy-url').value = "https://www.google.com";
+            document.getElementById('proxy-iframe').src = scramjetBase + "https://www.google.com";
+        }
 
         function changeTab(target) {
             document.getElementById('game-runtime').classList.remove('active');
@@ -368,8 +376,6 @@
             runtime.classList.add('active');
             
             document.getElementById('runtime-title').innerText = name;
-            
-            // Route through Scramjet or direct iframe depending on requirement
             document.getElementById('runtime-iframe').src = targetUrl;
         }
 
@@ -392,15 +398,7 @@
                 }
             }
 
-            // Encode string for Scramjet handling
-            const encodedUrl = encodeXor(query);
-            document.getElementById('proxy-iframe').src = scramjetBase + encodedUrl;
-        }
-
-        function encodeXor(str) {
-            return encodeURIComponent(str.toString().split('').map((char, index) => 
-                index % 2 ? char : String.fromCharCode(char.charCodeAt(0) + 2)
-            ).join(''));
+            document.getElementById('proxy-iframe').src = scramjetBase + query;
         }
     </script>
 </body>
