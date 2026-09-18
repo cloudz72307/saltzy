@@ -311,7 +311,7 @@
                         <div class="tile-desc">Web Port</div>
                     </div>
                 </div>
-                <div class="game-tile" onclick="launchGame('Slope', 'https://slopeonlinegame.github.io/')">
+                <div class="game-tile" onclick="launchGame('Slope', 'https://html5.gamemonetize.com/1g5x3j9q1tq62s96b9l27d3b94b7m5v7/')">
                     <div class="tile-icon">🟢</div>
                     <div class="tile-details">
                         <div class="tile-title">Slope</div>
@@ -336,11 +336,11 @@
         <div id="view-proxy" class="view-panel">
             <div class="panel-heading">Web Proxy</div>
             <div class="proxy-bar">
-                <input type="text" id="proxy-url" class="proxy-input" value="https://www.google.com" placeholder="Search or enter URL...">
+                <input type="text" id="proxy-url" class="proxy-input" value="https://html.duckduckgo.com" placeholder="Search or enter URL...">
                 <button class="proxy-submit" onclick="executeProxy()">Load</button>
             </div>
             <div class="proxy-screen">
-                <iframe id="proxy-iframe" src="about:blank"></iframe>
+                <iframe id="proxy-iframe" src="about:blank" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
             </div>
         </div>
     </main>
@@ -349,9 +349,8 @@
         const scramjetBase = "https://cloudz72307-abc-learning-time.hf.space/";
 
         function initProxy() {
-            // Automatically queue Google as the initial default load state
-            document.getElementById('proxy-url').value = "https://www.google.com";
-            document.getElementById('proxy-iframe').src = scramjetBase + "https://www.google.com";
+            document.getElementById('proxy-url').value = "https://html.duckduckgo.com";
+            document.getElementById('proxy-iframe').src = scramjetBase + "https://html.duckduckgo.com";
         }
 
         function changeTab(target) {
@@ -394,7 +393,7 @@
                 if (query.includes('.') && !query.includes(' ')) {
                     query = 'https://' + query;
                 } else {
-                    query = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+                    query = 'https://html.duckduckgo.com/html/?q=' + encodeURIComponent(query);
                 }
             }
 
