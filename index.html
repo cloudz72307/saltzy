@@ -3,329 +3,471 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saltzy | Directory</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        slate: {
-                            850: '#151e2e',
-                            900: '#0f172a',
-                            950: '#020617',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <title>Saltzy</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        :root {
+            --bg-base: #0f172a;
+            --bg-surface: #1e293b;
+            --bg-card: #334155;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #475569;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
 
         body {
-            background-color: #020617; /* slate-950 */
-            color: #cbd5e1; /* slate-300 */
-        }
-        
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #334155; /* slate-700 */
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #475569; /* slate-600 */
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        .view-section {
-            display: none;
-            height: 100%;
-            width: 100%;
+        /* Sidebar */
+        sidebar {
+            width: 260px;
+            background-color: var(--bg-surface);
+            border-right: 1px solid var(--border);
+            display: flex;
             flex-direction: column;
+            justify-content: space-between;
+            padding: 24px 16px;
         }
-        .view-section.active {
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-icon {
+            font-size: 28px;
+            background: var(--bg-card);
+            padding: 8px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .nav-links {
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: var(--text-muted);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: left;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        .nav-item.active {
+            background-color: var(--accent);
+            color: var(--bg-base);
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Main Content */
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            background-color: var(--bg-base);
+        }
+
+        .tab-content {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            overflow-y: auto;
+            padding: 32px;
+        }
+
+        .tab-content.active {
             display: flex;
         }
 
-        .game-item {
-            transition: all 0.15s ease;
+        /* Header titles inside views */
+        .view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
         }
-        .game-item:hover {
-            background-color: #1e293b; /* slate-800 */
-            border-color: #475569; /* slate-600 */
-            transform: translateY(-2px);
+
+        .view-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        /* Games Grid */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .game-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .game-thumb {
+            height: 130px;
+            background-color: var(--bg-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .game-info {
+            padding: 16px;
+        }
+
+        .game-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .game-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Active Game Player View */
+        #game-player-view {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        #game-player-view.active {
+            display: flex;
+        }
+
+        .game-player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .back-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .back-btn:hover {
+            background: var(--border);
+        }
+
+        .game-iframe-container {
+            flex-grow: 1;
+            position: relative;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Fallback message overlay if iframe refuses connection */
+        .iframe-fallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-base);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 20px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .external-launch-btn {
+            background: var(--accent);
+            color: var(--bg-base);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+        .external-launch-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Proxy Browser View */
+        .browser-toolbar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .browser-input {
+            flex-grow: 1;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 16px;
+            color: var(--text-main);
+            font-size: 14px;
+            outline: none;
+        }
+
+        .browser-input:focus {
+            border-color: var(--accent);
+        }
+
+        .browser-go-btn {
+            background-color: var(--accent);
+            color: var(--bg-base);
+            border: none;
+            padding: 0 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .browser-go-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .browser-frame-container {
+            flex-grow: 1;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .browser-frame-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #fff;
         }
     </style>
 </head>
-<body class="flex h-screen w-screen overflow-hidden antialiased">
+<body>
 
-    <!-- Sidebar -->
-    <aside class="w-16 md:w-64 flex-shrink-0 bg-slate-900 border-r border-slate-800 flex flex-col transition-all duration-300 shadow-xl z-20">
-        <!-- Logo Area -->
-        <div class="h-16 flex items-center justify-center md:justify-start md:px-6 border-b border-slate-800">
-            <!-- Minimalist Salt Shaker SVG -->
-            <div class="w-6 h-6 text-slate-200 flex-shrink-0">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <!-- Shaker Body -->
-                    <path d="M7 8h10l-1 12H8L7 8z" fill="transparent"/>
-                    <!-- Cap -->
-                    <path d="M7 8c0-2 2-4 5-4s5 2 5 4" fill="transparent"/>
-                    <!-- Holes -->
-                    <circle cx="10" cy="6" r="0.5" fill="currentColor" stroke="none"/>
-                    <circle cx="14" cy="6" r="0.5" fill="currentColor" stroke="none"/>
-                    <circle cx="12" cy="7" r="0.5" fill="currentColor" stroke="none"/>
-                </svg>
+    <!-- Sidebar Navigation -->
+    <sidebar>
+        <div>
+            <div class="logo-area">
+                <div class="logo-icon">🧂</div>
+                <div class="logo-text">Saltzy</div>
             </div>
-            <span class="hidden md:block ml-3 font-semibold text-slate-200 tracking-wide">Saltzy</span>
+            <div class="nav-links">
+                <button class="nav-item active" onclick="switchTab('games')">🎮 Games</button>
+                <button class="nav-item" onclick="switchTab('proxy')">🌐 Browser Proxy</button>
+            </div>
         </div>
-
-        <nav class="flex-1 py-4 flex flex-col gap-1 px-2 md:px-3">
-            <button onclick="switchView('games')" id="nav-games" class="nav-btn w-full flex items-center px-3 py-2.5 text-sm rounded-lg bg-slate-800 text-slate-100 border border-slate-700">
-                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <span class="hidden md:block ml-3">Games</span>
-            </button>
-            <button onclick="switchView('browser')" id="nav-browser" class="nav-btn w-full flex items-center px-3 py-2.5 text-sm rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 border border-transparent">
-                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-                <span class="hidden md:block ml-3">Browser</span>
-            </button>
-        </nav>
-        
-        <!-- Status indicator for proxy -->
-        <div class="hidden md:flex p-4 border-t border-slate-800 items-center gap-2">
-            <div id="sw-status" class="w-2 h-2 rounded-full bg-slate-500"></div>
-            <span class="text-xs text-slate-500">Scramjet Standby</span>
+        <div class="sidebar-footer">
+            Saltzy v1.0
         </div>
-    </aside>
+    </sidebar>
 
-    <main class="flex-1 relative bg-slate-950">
-        
-        <!-- Games View -->
-        <section id="view-games" class="view-section active">
-            <header class="h-16 flex items-center justify-between px-6 border-b border-slate-900 bg-slate-950/90 backdrop-blur-md sticky top-0 z-10 flex-shrink-0">
-                <h1 id="games-header-title" class="text-lg font-medium text-slate-200">Directory</h1>
-                <button id="close-game-btn" onclick="closeGame()" class="hidden px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm rounded-md transition-colors border border-slate-700 flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                    Back to Grid
-                </button>
-            </header>
-            
-            <!-- Grid Container -->
-            <div id="games-grid-container" class="p-6 overflow-y-auto flex-1">
-                <div id="games-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
-                    <!-- JavaScript will populate this -->
-                </div>
+    <!-- Main Section -->
+    <main>
+        <!-- Games Tab -->
+        <div id="tab-games" class="tab-content active">
+            <div class="view-header">
+                <div class="view-title">Featured Games</div>
             </div>
-
-            <!-- Dedicated Game Player Iframe -->
-            <div id="game-player-container" class="hidden flex-1 w-full bg-slate-950">
-                <iframe id="game-frame" class="w-full h-full border-none bg-white" src=""></iframe>
-            </div>
-        </section>
-
-        <!-- Browser / Scramjet Proxy View -->
-        <section id="view-browser" class="view-section bg-slate-950">
-            <!-- Browser Chrome (Address Bar) -->
-            <header class="h-14 flex items-center px-4 border-b border-slate-800 bg-slate-900 flex-shrink-0 gap-2 shadow-sm">
-                <div class="flex gap-1 mr-2 text-slate-400">
-                    <button onclick="document.getElementById('scramjet-frame').contentWindow.history.back()" class="p-1.5 hover:bg-slate-800 hover:text-slate-100 rounded-md transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
-                    <button onclick="document.getElementById('scramjet-frame').contentWindow.history.forward()" class="p-1.5 hover:bg-slate-800 hover:text-slate-100 rounded-md transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
-                    <button onclick="document.getElementById('scramjet-frame').contentWindow.location.reload()" class="p-1.5 hover:bg-slate-800 hover:text-slate-100 rounded-md transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></button>
-                </div>
-                
-                <div class="flex-1 relative flex items-center max-w-3xl mx-auto">
-                    <svg class="w-4 h-4 absolute left-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    <input type="text" id="proxy-address-bar" placeholder="Search the web or enter a URL" 
-                        class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 pl-9 pr-4 text-sm text-slate-200 focus:outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-500 transition-all shadow-inner"
-                        onkeydown="if(event.key === 'Enter') submitProxyUrl()">
-                </div>
-            </header>
-            
-            <!-- Browser Content Area -->
-            <div class="flex-1 relative bg-slate-50">
-                <!-- Fallback info layer (shows when iframe is empty) -->
-                <div id="browser-startup" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950 z-0">
-                    <div class="w-16 h-16 text-slate-800 mb-6">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="2" y1="12" x2="22" y2="12"></line>
-                        </svg>
+            <div class="games-grid">
+                <div class="game-card" onclick="openGame('Deltarune', 'https://mollomm1.github.io/test/')">
+                    <div class="game-thumb">❤️</div>
+                    <div class="game-info">
+                        <div class="game-name">Deltarune</div>
+                        <div class="game-desc">Chapters 1-5 web port</div>
                     </div>
-                    <h2 class="text-slate-300 text-lg font-medium mb-2">Scramjet Ready</h2>
-                    <p class="text-slate-500 text-sm max-w-sm text-center">
-                        Enter a URL above to begin browsing securely. Note: Requires the Scramjet backend to be running.
-                    </p>
                 </div>
-                <!-- The actual iframe -->
-                <iframe id="scramjet-frame" class="relative z-10 w-full h-full border-none bg-white hidden" src=""></iframe>
             </div>
-        </section>
+        </div>
 
+        <!-- In-App Game Player View (Hidden by default until a game is clicked) -->
+        <div id="game-player-view">
+            <div class="game-player-header">
+                <div id="active-game-title" style="font-weight: 600; font-size: 16px;">Game</div>
+                <button class="back-btn" onclick="closeGame()">← Back to Games</button>
+            </div>
+            <div class="game-iframe-container">
+                <!-- Fallback safety message container in case security restrictions block embedding -->
+                <div class="iframe-fallback" id="iframe-fallback">
+                    <h3 id="fallback-title">Loading Game...</h3>
+                    <p style="color: var(--text-muted); max-width: 400px; font-size: 14px;">If the game frame stays blank, the destination site prevents being embedded directly due to security policies.</p>
+                    <a id="fallback-link" href="#" target="_blank" class="external-launch-btn">Open in Full Tab</a>
+                </div>
+                <iframe id="game-iframe" src="" sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock allow-popups"></iframe>
+            </div>
+        </div>
+
+        <!-- Browser Proxy Tab -->
+        <div id="tab-proxy" class="tab-content">
+            <div class="view-header">
+                <div class="view-title">Web Proxy Browser</div>
+            </div>
+            <div class="browser-toolbar">
+                <input type="text" id="proxy-url-input" class="browser-input" placeholder="Enter URL (e.g., https://www.google.com)">
+                <button class="browser-go-btn" onclick="loadProxyUrl()">Go</button>
+            </div>
+            <div class="browser-frame-container">
+                <iframe id="proxy-iframe" src="about:blank"></iframe>
+            </div>
+        </div>
     </main>
 
     <script>
-        /**
-         * Scramjet Proxy Configuration & Frontend Implementation
-         */
-        const scramjetConfig = {
-            prefix: '/~/',       // Standard Scramjet route prefix
-            sw: '/sw.js',        // Standard Service Worker path
+        function switchTab(tabName) {
+            // Close game player if open
+            document.getElementById('game-player-view').classList.remove('active');
             
-            // Standard XOR encode logic commonly used in proxy frontends to obfuscate URLs from basic filters
-            encodeUrl: function (str) {
-                if (!str) return str;
-                return encodeURIComponent(str.toString().split('').map((char, ind) => 
-                    ind % 2 ? String.fromCharCode(char.charCodeAt(0) ^ 2) : char
-                ).join(''));
-            }
-        };
+            // Toggle tab buttons
+            const buttons = document.querySelectorAll('.nav-item');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Hide all tab contents
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
 
-        // Register the Service Worker (Critical for intercepting fetch requests)
-        async function registerScramjetSW() {
-            const statusDot = document.getElementById('sw-status');
+            if (tabName === 'games') {
+                buttons[0].classList.add('active');
+                document.getElementById('tab-games').classList.add('active');
+            } else if (tabName === 'proxy') {
+                buttons[1].classList.add('active');
+                document.getElementById('tab-proxy').classList.add('active');
+            }
+        }
+
+        function openGame(name, url) {
+            // Hide games list view
+            document.getElementById('tab-games').classList.remove('active');
             
-            if ('serviceWorker' in navigator) {
+            // Show game player view
+            const playerView = document.getElementById('game-player-view');
+            playerView.classList.add('active');
+            
+            document.getElementById('active-game-title').innerText = name;
+            document.getElementById('fallback-title').innerText = 'Loading ' + name + '...';
+            
+            const fallbackLink = document.getElementById('fallback-link');
+            fallbackLink.href = url;
+            
+            const iframe = document.getElementById('game-iframe');
+            iframe.src = url;
+
+            // Give it 3 seconds, if it's still loading or blocked, make sure fallback is visible/accessible
+            setTimeout(() => {
+                document.getElementById('iframe-fallback').style.display = 'flex';
+            }, 500);
+
+            // Hide fallback automatically if iframe manages to load content
+            iframe.onload = function() {
                 try {
-                    // Attempting to register the Scramjet worker
-                    // This will 404 in a standalone HTML file without the backend, which is expected.
-                    await navigator.serviceWorker.register(scramjetConfig.sw, {
-                        scope: scramjetConfig.prefix
-                    });
-                    console.log("[Saltzy] Scramjet Service Worker registered successfully.");
-                    if(statusDot) statusDot.className = "w-2 h-2 rounded-full bg-emerald-500";
-                } catch (error) {
-                    console.warn("[Saltzy] Scramjet SW registration failed. Ensure the bare server is running on the backend.", error);
-                    if(statusDot) statusDot.className = "w-2 h-2 rounded-full bg-amber-500";
+                    // If accessible or loaded
+                    document.getElementById('iframe-fallback').style.display = 'none';
+                } catch(e) {
+                    // stays visible with the manual button if blocked by CORS/X-Frame
                 }
-            } else {
-                if(statusDot) statusDot.className = "w-2 h-2 rounded-full bg-red-500";
-            }
-        }
-        
-        // Initialize registration
-        registerScramjetSW();
-
-        function submitProxyUrl() {
-            const input = document.getElementById('proxy-address-bar');
-            let url = input.value.trim();
-            if (!url) return;
-
-            // Basic search/URL detection
-            if (!/^https?:\/\//i.test(url) && url.includes('.') && !url.includes(' ')) {
-                url = 'https://' + url;
-            } else if (!/^https?:\/\//i.test(url)) {
-                // Treat as search query via DuckDuckGo
-                url = 'https://duckduckgo.com/?q=' + encodeURIComponent(url);
-            }
-            
-            // Update input visually
-            input.value = url;
-            
-            // Hide startup background, show frame
-            document.getElementById('browser-startup').style.display = 'none';
-            const frame = document.getElementById('scramjet-frame');
-            frame.classList.remove('hidden');
-
-            // Generate Scramjet Encoded URL
-            const encodedUrl = scramjetConfig.encodeUrl(url);
-            const proxyPath = scramjetConfig.prefix + encodedUrl;
-            
-            // Set iframe src to trigger Scramjet service worker interception
-            frame.src = proxyPath;
-        }
-
-        /* --- STREAMING_CHUNK:Building UI logic and game directory... --- */
-
-        function switchView(viewId) {
-            // Update buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.className = "nav-btn w-full flex items-center px-3 py-2.5 text-sm rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 border border-transparent transition-all";
-            });
-            const activeBtn = document.getElementById(`nav-${viewId}`);
-            activeBtn.className = "nav-btn w-full flex items-center px-3 py-2.5 text-sm rounded-lg bg-slate-800 text-slate-100 border border-slate-700 transition-all";
-
-            // Update sections
-            document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
-            document.getElementById(`view-${viewId}`).classList.add('active');
-        }
-
-        // Minimalist Game Data
-        const gamesList = [
-            { id: '2048', name: '2048', dev: 'Gabriele Cirulli', url: 'https://play2048.co/' },
-            { id: 'mc', name: 'Minecraft Classic', dev: 'Mojang', url: 'https://classic.minecraft.net/' },
-            { id: 'slope', name: 'Slope', dev: 'Y8', url: 'https://slopegame.io/' },
-            { id: 'tetris', name: 'Tetris', dev: 'Classic', url: 'https://tetris.com/play-tetris' },
-            { id: 'cookie', name: 'Cookie Clicker', dev: 'Orteil', url: 'https://orteil.dashnet.org/cookieclicker/' },
-            { id: 'chess', name: 'Chess.com', dev: 'Chess', url: 'https://chess.com/' },
-            { id: 'pacman', name: 'Pac-Man', dev: 'Namco', url: 'https://freepacman.org/' },
-            { id: 'retro', name: 'Retro Bowl', dev: 'New Star', url: 'https://retrobowl.me/' },
-            { id: 'krunker', name: 'Krunker.io', dev: 'Yendis', url: 'https://krunker.io/' },
-            { id: 'smash', name: 'Smash Karts', dev: 'Tall Team', url: 'https://smashkarts.io/' }
-        ];
-
-        function initGamesGrid() {
-            const grid = document.getElementById('games-grid');
-            gamesList.forEach(game => {
-                const el = document.createElement('div');
-                el.className = 'game-item bg-slate-900 border border-slate-800 rounded-xl p-4 cursor-pointer flex flex-col gap-3 group shadow-sm';
-                
-                // Launch game in the dedicated game frame
-                el.onclick = () => {
-                    playGame(game.url, game.name);
-                };
-                
-                // SVG Placeholder for game icon matching slate theme
-                el.innerHTML = `
-                    <div class="h-28 w-full bg-slate-950 rounded-lg border border-slate-800 flex items-center justify-center group-hover:border-slate-600 transition-colors relative overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-br from-transparent to-slate-900/50"></div>
-                        <span class="text-sm text-slate-500 font-mono tracking-widest uppercase z-10">${game.id}</span>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-slate-200 text-sm font-semibold leading-tight">${game.name}</h3>
-                        <p class="text-slate-500 text-xs mt-1 font-medium">${game.dev}</p>
-                    </div>
-                `;
-                grid.appendChild(el);
-            });
-        }
-
-        // Initialize application
-        window.addEventListener('DOMContentLoaded', initGamesGrid);
-
-        function playGame(url, name) {
-            // Hide the grid, show the player and back button
-            document.getElementById('games-grid-container').classList.add('hidden');
-            document.getElementById('games-grid-container').classList.remove('flex-1');
-            document.getElementById('game-player-container').classList.remove('hidden');
-            document.getElementById('close-game-btn').classList.remove('hidden');
-            document.getElementById('games-header-title').textContent = `Playing: ${name}`;
-            
-            // Encode the URL using Scramjet proxy logic so it routes securely
-            const encodedUrl = scramjetConfig.encodeUrl(url);
-            const proxyPath = scramjetConfig.prefix + encodedUrl;
-            
-            document.getElementById('game-frame').src = proxyPath;
+            };
         }
 
         function closeGame() {
-            // Clear iframe to stop background audio/processes
-            document.getElementById('game-frame').src = ''; 
+            const iframe = document.getElementById('game-iframe');
+            iframe.src = 'about:blank'; // Stop audio/game process
+            document.getElementById('game-player-view').classList.remove('active');
+            document.getElementById('tab-games').classList.add('active');
+        }
+
+        function loadProxyUrl() {
+            let input = document.getElementById('proxy-url-input').value.trim();
+            if (!input) return;
             
-            // Show the grid, hide the player and back button
-            document.getElementById('game-player-container').classList.add('hidden');
-            document.getElementById('games-grid-container').classList.remove('hidden');
-            document.getElementById('games-grid-container').classList.add('flex-1');
-            document.getElementById('close-game-btn').classList.add('hidden');
-            document.getElementById('games-header-title').textContent = 'Directory';
+            if (!input.startsWith('http://') && !input.startsWith('https://')) {
+                input = 'https://' + input;
+            }
+            
+            document.getElementById('proxy-iframe').src = input;
         }
     </script>
 </body>
