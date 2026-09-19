@@ -319,7 +319,7 @@ const UPDATES = [
   },
   {
     date: "September 18, 2026",
-    tag: "creation",
+    tag: "info",
     title: "Saltzy is born.",
     desc: "Welcome, Saltzy is a game platform made by ONE person aka tiramisu."
   },
