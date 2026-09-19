@@ -1,4 +1,3 @@
-```js
 /* ===========================================================
    SALTZY — app.js
    Tabs, game loading, chat, updates
@@ -124,7 +123,7 @@ document
 
 // ntfy server + room
 const NTFY_BASE = "https://ntfy.sh";
-const CHAT_TOPIC = "saltzy-slope-global-chat-q8k2vw";
+const CHAT_TOPIC = "9rYuTBZN0evM2phm";
 
 const NAME_KEY = "saltzy_display_name";
 
@@ -253,7 +252,7 @@ function initChatUI() {
 }
 
 
-/* -----------------------------------------------------------
+*/ -----------------------------------------------------------
    SEND MESSAGE
 ----------------------------------------------------------- */
 
