@@ -319,19 +319,19 @@ const UPDATES = [
   },
   {
     date: "September 18, 2026",
-    tag: "new",
+    tag: "creation",
     title: "Saltzy is born.",
     desc: "Welcome, Saltzy is a game platform made by ONE person aka tiramisu."
   },
   {
     date: "September 18, 2026",
-    tag: "info",
+    tag: "BETA - info",
     title: "Global chat added",
     desc: "Took like 3 hours but i FINALLY added chat and it WORKS!!!!."
   },
   {
     date: "September 18, 2026",
-    tag: "info",
+    tag: "BETA - info",
     title: "More games coming",
     desc: "Slope is the first game on Saltzy. The Games tab is built to hold more \u2014 new additions will be announced here first."
   }
