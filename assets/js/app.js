@@ -314,14 +314,14 @@ const UPDATES = [
   {
     date: "September 18, 2026",
     tag: "new",
-    title: "Saltzy is live",
-    desc: "Welcome to Saltzy. Slope is up and playable in the Games tab, and global chat is open \u2014 pick a display name and say hi."
+    title: "Saltzy is born.",
+    desc: "Welcome, Saltzy is a game platform made by ONE person aka tiramisu."
   },
   {
     date: "September 18, 2026",
     tag: "info",
     title: "Global chat added",
-    desc: "Chat now lives in its own tab. First time in, you'll be asked for a display name \u2014 no account needed, just a name to talk under."
+    desc: "Took like 3 hours but i FINALLY added chat and it WORKS!!!!."
   },
   {
     date: "September 18, 2026",
