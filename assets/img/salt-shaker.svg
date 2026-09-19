@@ -4,7 +4,7 @@
   <circle cx="47" cy="14" r="1.2" fill="#F5FAFF"/>
   <circle cx="36" cy="15" r="1" fill="#F5FAFF"/>
 
-  <!-- cap -->
+    <!-- cap -->
   <path d="M20 14 C20 10.7 22.7 8 26 8 L34 8 C37.3 8 40 10.7 40 14 L41.5 19 L18.5 19 Z" fill="#F5FAFF"/>
   <circle cx="25" cy="13.5" r="1.1" fill="#0E3B66"/>
   <circle cx="30" cy="12.5" r="1.1" fill="#0E3B66"/>
