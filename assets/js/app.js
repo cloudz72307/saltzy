@@ -12,18 +12,37 @@
    between tabs on the SAME browser (via localStorage), not
    between different people. See README.md for full setup steps.
 ----------------------------------------------------------- */
+/* -----------------------------------------------------------
+   0. FIREBASE — GLOBAL CHAT BACKEND
+   ----------------------------------------------------------- */
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  push,
+  query,
+  limitToLast,
+  onChildAdded,
+  get
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+
 const FIREBASE_CONFIG = {
-  apiKey: "",
-  authDomain: "",
-  databaseURL: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
+  apiKey: "AIzaSyC66OaliJm4mKIVAUuHOqOKDMFba3ZmJ48",
+  authDomain: "saltzy-9ef44.firebaseapp.com",
+  databaseURL: "YOUR_DATABASE_URL_HERE",
+  projectId: "saltzy-9ef44",
+  storageBucket: "saltzy-9ef44.firebasestorage.app",
+  messagingSenderId: "428202952726",
+  appId: "1:428202952726:web:43e2dd73fa9d7fafb60d37",
+  measurementId: "G-2RBDP9QB5N"
 };
 
-const FIREBASE_ENABLED = !!(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.databaseURL);
+const firebaseApp = initializeApp(FIREBASE_CONFIG);
+const db = getDatabase(firebaseApp);
 
+const FIREBASE_ENABLED =
+  !!(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.databaseURL);
 /* -----------------------------------------------------------
    1. TABS
 ----------------------------------------------------------- */
