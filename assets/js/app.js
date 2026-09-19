@@ -17,7 +17,7 @@
    the entire setup, no account needed. See README.md for details,
    including how to self-host ntfy or swap in Firebase instead.
 ----------------------------------------------------------- */
-const NTFY_BASE = "https://ntfy.sh/9rYuTBZN0evM2phm";
+const NTFY_BASE = "https://ntfy.sh/H6t08fYPu0Wf9uRg";
 const CHAT_TOPIC = "saltzy-slope-global-chat-q8k2vw";
 
 /* -----------------------------------------------------------
