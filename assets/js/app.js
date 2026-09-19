@@ -5,6 +5,14 @@
 
 
 /* -----------------------------------------------------------
+   0. GLOBAL CHAT BACKEND — ntfy.sh
+----------------------------------------------------------- */
+
+const NTFY_BASE = "https://ntfy.sh";
+const CHAT_TOPIC = "9rYuTBZN0evM2phm";
+
+
+/* -----------------------------------------------------------
    1. TABS
 ----------------------------------------------------------- */
 
@@ -17,13 +25,21 @@ const views = {
 };
 
 function activateTab(name) {
-  tabButtons.forEach(b =>
-    b.classList.toggle("active", b.dataset.tab === name)
-  );
+  tabButtons.forEach(btn => {
+    btn.classList.toggle(
+      "active",
+      btn.dataset.tab === name
+    );
+  });
 
-  Object.entries(views).forEach(([key, el]) =>
-    el.classList.toggle("active", key === name)
-  );
+  Object.entries(views).forEach(([key, el]) => {
+    if (el) {
+      el.classList.toggle(
+        "active",
+        key === name
+      );
+    }
+  });
 
   if (name === "chat") {
     onChatTabOpened();
@@ -43,12 +59,23 @@ activateTab("games");
    2. GAME STAGE — load the Unity build on demand
 ----------------------------------------------------------- */
 
-const gameGridView = document.getElementById("game-grid-view");
-const stageView = document.getElementById("stage-view");
-const stageFrame = document.getElementById("stage-frame");
-const splash = document.getElementById("unity-splash");
-const splashFill = document.getElementById("splash-fill");
-const splashLabel = document.getElementById("splash-label");
+const gameGridView =
+  document.getElementById("game-grid-view");
+
+const stageView =
+  document.getElementById("stage-view");
+
+const stageFrame =
+  document.getElementById("stage-frame");
+
+const splash =
+  document.getElementById("unity-splash");
+
+const splashFill =
+  document.getElementById("splash-fill");
+
+const splashLabel =
+  document.getElementById("splash-label");
 
 let gameInstance = null;
 let gameLoaded = false;
@@ -61,16 +88,21 @@ function openGame() {
   splashFill.style.width = "0%";
   splashLabel.textContent = "Loading Slope…";
 
-  if (gameLoaded) return;
+  if (gameLoaded) {
+    splash.classList.add("hidden");
+    return;
+  }
 
   gameInstance = UnityLoader.instantiate(
     "gameContainer",
     "Build/slope.json",
     {
       onProgress: function (instance, progress) {
-        const pct = Math.round(progress * 100);
+        const pct =
+          Math.round(progress * 100);
 
-        splashFill.style.width = pct + "%";
+        splashFill.style.width =
+          pct + "%";
 
         splashLabel.textContent =
           pct < 100
@@ -121,26 +153,42 @@ document
    3. CHAT — ntfy.sh global chat
 ----------------------------------------------------------- */
 
-// ntfy server + room
-const NTFY_BASE = "https://ntfy.sh";
-const CHAT_TOPIC = "9rYuTBZN0evM2phm";
+const NAME_KEY =
+  "saltzy_display_name";
 
-const NAME_KEY = "saltzy_display_name";
+const nameModal =
+  document.getElementById("name-modal");
 
-// DOM elements
-const nameModal = document.getElementById("name-modal");
-const nameInput = document.getElementById("name-input");
-const nameJoinBtn = document.getElementById("name-join-btn");
-const nameError = document.getElementById("name-error");
+const nameInput =
+  document.getElementById("name-input");
 
-const chatMessagesEl = document.getElementById("chat-messages");
-const chatInput = document.getElementById("chat-input");
-const chatSendBtn = document.getElementById("chat-send-btn");
-const chatWhoamiName = document.getElementById("chat-whoami-name");
-const chatChangeNameBtn = document.getElementById("chat-change-name");
-const chatModeBadge = document.getElementById("chat-mode-badge");
+const nameJoinBtn =
+  document.getElementById("name-join-btn");
 
-let displayName = localStorage.getItem(NAME_KEY) || "";
+const nameError =
+  document.getElementById("name-error");
+
+const chatMessagesEl =
+  document.getElementById("chat-messages");
+
+const chatInput =
+  document.getElementById("chat-input");
+
+const chatSendBtn =
+  document.getElementById("chat-send-btn");
+
+const chatWhoamiName =
+  document.getElementById("chat-whoami-name");
+
+const chatChangeNameBtn =
+  document.getElementById("chat-change-name");
+
+const chatModeBadge =
+  document.getElementById("chat-mode-badge");
+
+let displayName =
+  localStorage.getItem(NAME_KEY) || "";
+
 let chatInitialized = false;
 let sseSource = null;
 
@@ -179,7 +227,8 @@ function sanitizeName(raw) {
 }
 
 function joinChat() {
-  const clean = sanitizeName(nameInput.value);
+  const clean =
+    sanitizeName(nameInput.value);
 
   if (!clean) {
     nameError.textContent =
@@ -195,37 +244,52 @@ function joinChat() {
 
   displayName = clean;
 
-  localStorage.setItem(NAME_KEY, displayName);
+  localStorage.setItem(
+    NAME_KEY,
+    displayName
+  );
 
   nameModal.classList.remove("active");
 
   initChatUI();
 }
 
-nameJoinBtn.addEventListener("click", joinChat);
+nameJoinBtn.addEventListener(
+  "click",
+  joinChat
+);
 
-nameInput.addEventListener("keydown", e => {
-  if (e.key === "Enter") {
-    joinChat();
+nameInput.addEventListener(
+  "keydown",
+  e => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      joinChat();
+    }
   }
-});
+);
 
 
 /* -----------------------------------------------------------
    CHANGE NAME
 ----------------------------------------------------------- */
 
-chatChangeNameBtn.addEventListener("click", () => {
-  nameModal.classList.add("active");
+chatChangeNameBtn.addEventListener(
+  "click",
+  () => {
+    nameModal.classList.add("active");
 
-  nameInput.value = displayName;
-  nameError.textContent = "";
+    nameInput.value =
+      displayName;
 
-  setTimeout(() => {
-    nameInput.focus();
-    nameInput.select();
-  }, 50);
-});
+    nameError.textContent = "";
+
+    setTimeout(() => {
+      nameInput.focus();
+      nameInput.select();
+    }, 50);
+  }
+);
 
 
 /* -----------------------------------------------------------
@@ -233,33 +297,45 @@ chatChangeNameBtn.addEventListener("click", () => {
 ----------------------------------------------------------- */
 
 function initChatUI() {
-  chatWhoamiName.textContent = displayName;
+  chatWhoamiName.textContent =
+    displayName;
 
-  if (chatInitialized) return;
+  if (chatInitialized) {
+    return;
+  }
 
   chatInitialized = true;
 
-  initNtfyChat();
+  chatSendBtn.addEventListener(
+    "click",
+    sendMessage
+  );
 
-  chatSendBtn.addEventListener("click", sendMessage);
-
-  chatInput.addEventListener("keydown", e => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      sendMessage();
+  chatInput.addEventListener(
+    "keydown",
+    e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendMessage();
+      }
     }
-  });
+  );
+
+  initNtfyChat();
 }
 
 
-*/ -----------------------------------------------------------
+/* -----------------------------------------------------------
    SEND MESSAGE
 ----------------------------------------------------------- */
 
 async function sendMessage() {
-  const text = chatInput.value.trim();
+  const text =
+    chatInput.value.trim();
 
-  if (!text) return;
+  if (!text) {
+    return;
+  }
 
   chatInput.value = "";
 
@@ -270,18 +346,20 @@ async function sendMessage() {
   };
 
   try {
-    const response = await fetch(
-      `${NTFY_BASE}/${CHAT_TOPIC}`,
-      {
-        method: "POST",
+    const response =
+      await fetch(
+        `${NTFY_BASE}/${CHAT_TOPIC}`,
+        {
+          method: "POST",
 
-        headers: {
-          "Content-Type": "text/plain"
-        },
+          headers: {
+            "Content-Type":
+              "text/plain"
+          },
 
-        body: JSON.stringify(msg)
-      }
-    );
+          body: JSON.stringify(msg)
+        }
+      );
 
     if (!response.ok) {
       throw new Error(
@@ -309,28 +387,44 @@ async function sendMessage() {
 ----------------------------------------------------------- */
 
 function renderMessage(msg) {
-  if (!msg || typeof msg !== "object") return;
+  if (
+    !msg ||
+    typeof msg !== "object" ||
+    !msg.text
+  ) {
+    return;
+  }
 
-  const mine = msg.name === displayName;
+  const mine =
+    msg.name === displayName;
 
-  const wrap = document.createElement("div");
+  const wrap =
+    document.createElement("div");
 
   wrap.className =
-    "msg" + (mine ? " me" : "");
+    "msg" +
+    (mine ? " me" : "");
 
-  const meta = document.createElement("div");
+  const meta =
+    document.createElement("div");
 
-  meta.className = "msg-meta";
+  meta.className =
+    "msg-meta";
 
-  const time = new Date(
-    msg.ts || Date.now()
-  ).toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit"
-  });
+  const time =
+    new Date(
+      msg.ts || Date.now()
+    ).toLocaleTimeString(
+      [],
+      {
+        hour: "2-digit",
+        minute: "2-digit"
+      }
+    );
 
   if (!mine) {
-    const name = document.createElement("b");
+    const name =
+      document.createElement("b");
 
     name.textContent =
       msg.name || "Unknown";
@@ -338,18 +432,22 @@ function renderMessage(msg) {
     meta.appendChild(name);
   }
 
-  const timeEl = document.createElement("span");
+  const timeEl =
+    document.createElement("span");
 
-  timeEl.textContent = time;
+  timeEl.textContent =
+    time;
 
   meta.appendChild(timeEl);
 
-  const bubble = document.createElement("div");
+  const bubble =
+    document.createElement("div");
 
-  bubble.className = "msg-bubble";
+  bubble.className =
+    "msg-bubble";
 
   bubble.textContent =
-    msg.text || "";
+    msg.text;
 
   wrap.appendChild(meta);
   wrap.appendChild(bubble);
@@ -357,11 +455,14 @@ function renderMessage(msg) {
   const wasNearBottom =
     chatMessagesEl.scrollHeight -
     chatMessagesEl.scrollTop -
-    chatMessagesEl.clientHeight < 120;
+    chatMessagesEl.clientHeight <
+    120;
 
   clearEmptyState();
 
-  chatMessagesEl.appendChild(wrap);
+  chatMessagesEl.appendChild(
+    wrap
+  );
 
   if (wasNearBottom) {
     chatMessagesEl.scrollTop =
@@ -375,12 +476,18 @@ function renderMessage(msg) {
 ----------------------------------------------------------- */
 
 function renderSystemNote(text) {
-  const note = document.createElement("div");
+  const note =
+    document.createElement("div");
 
-  note.className = "chat-empty";
-  note.textContent = text;
+  note.className =
+    "chat-empty";
 
-  chatMessagesEl.appendChild(note);
+  note.textContent =
+    text;
+
+  chatMessagesEl.appendChild(
+    note
+  );
 
   chatMessagesEl.scrollTop =
     chatMessagesEl.scrollHeight;
@@ -393,7 +500,9 @@ function renderSystemNote(text) {
 
 function clearEmptyState() {
   const emptyState =
-    chatMessagesEl.querySelector(".chat-empty");
+    chatMessagesEl.querySelector(
+      ".chat-empty"
+    );
 
   if (emptyState) {
     emptyState.remove();
@@ -410,7 +519,8 @@ async function loadChatHistory() {
     const url =
       `${NTFY_BASE}/${CHAT_TOPIC}/json?poll=1&since=12h`;
 
-    const response = await fetch(url);
+    const response =
+      await fetch(url);
 
     if (!response.ok) {
       throw new Error(
@@ -421,10 +531,11 @@ async function loadChatHistory() {
     const rawText =
       await response.text();
 
-    const lines = rawText
-      .trim()
-      .split("\n")
-      .filter(Boolean);
+    const lines =
+      rawText
+        .trim()
+        .split("\n")
+        .filter(Boolean);
 
     const messages = [];
 
@@ -439,7 +550,9 @@ async function loadChatHistory() {
         ) {
           try {
             const msg =
-              JSON.parse(envelope.message);
+              JSON.parse(
+                envelope.message
+              );
 
             if (
               msg &&
@@ -448,12 +561,10 @@ async function loadChatHistory() {
             ) {
               messages.push(msg);
             }
-
           } catch {
-            // Ignore invalid Saltzy messages
+            // Ignore invalid messages
           }
         }
-
       } catch {
         // Ignore malformed lines
       }
@@ -493,7 +604,9 @@ async function loadChatHistory() {
 ----------------------------------------------------------- */
 
 function subscribeChatLive() {
-  if (sseSource) return;
+  if (sseSource) {
+    return;
+  }
 
   const url =
     `${NTFY_BASE}/${CHAT_TOPIC}/sse`;
@@ -514,59 +627,63 @@ function subscribeChatLive() {
     chatModeBadge.textContent =
       "Live";
 
-    chatModeBadge.style.color = "";
+    chatModeBadge.style.color =
+      "";
   };
 
-  sseSource.onmessage = event => {
-    try {
-      const envelope =
-        JSON.parse(event.data);
+  sseSource.onmessage =
+    event => {
+      try {
+        const envelope =
+          JSON.parse(
+            event.data
+          );
 
-      if (
-        envelope.event !== "message" ||
-        !envelope.message
-      ) {
-        return;
+        if (
+          envelope.event !==
+            "message" ||
+          !envelope.message
+        ) {
+          return;
+        }
+
+        const msg =
+          JSON.parse(
+            envelope.message
+          );
+
+        if (
+          !msg ||
+          typeof msg !==
+            "object" ||
+          !msg.text
+        ) {
+          return;
+        }
+
+        renderMessage(msg);
+
+      } catch (err) {
+        console.warn(
+          "Saltzy chat: ignored malformed event",
+          err
+        );
       }
+    };
 
-      const msg =
-        JSON.parse(envelope.message);
-
-      if (
-        !msg ||
-        typeof msg !== "object"
-      ) {
-        return;
-      }
-
-      if (!msg.text) {
-        return;
-      }
-
-      clearEmptyState();
-
-      renderMessage(msg);
-
-    } catch (err) {
+  sseSource.onerror =
+    err => {
       console.warn(
-        "Saltzy chat: ignored malformed event",
+        "Saltzy chat: connection error",
         err
       );
-    }
-  };
 
-  sseSource.onerror = err => {
-    console.warn(
-      "Saltzy chat: connection error",
-      err
-    );
+      chatModeBadge.textContent =
+        "Reconnecting…";
 
-    chatModeBadge.textContent =
-      "Reconnecting…";
-
-    chatModeBadge.style.color =
-      "var(--danger)";
-  };
+      chatModeBadge.style.color =
+        "var(--danger)";
+    };
 }
 
 
@@ -592,7 +709,8 @@ function escapeHtml(str) {
   const div =
     document.createElement("div");
 
-  div.textContent = str;
+  div.textContent =
+    str;
 
   return div.innerHTML;
 }
@@ -627,7 +745,13 @@ const UPDATES = [
 
 function renderUpdates() {
   const list =
-    document.getElementById("updates-list");
+    document.getElementById(
+      "updates-list"
+    );
+
+  if (!list) {
+    return;
+  }
 
   list.innerHTML = "";
 
@@ -639,11 +763,13 @@ function renderUpdates() {
       "update-item";
 
     item.innerHTML = `
-      <div class="update-date">${u.date}</div>
+      <div class="update-date">
+        ${escapeHtml(u.date)}
+      </div>
 
       <div class="update-card glass">
-        <span class="update-tag ${u.tag}">
-          ${u.tag.toUpperCase()}
+        <span class="update-tag ${escapeHtml(u.tag)}">
+          ${escapeHtml(u.tag.toUpperCase())}
         </span>
 
         <h3 class="update-title">
@@ -661,4 +787,3 @@ function renderUpdates() {
 }
 
 renderUpdates();
-```
