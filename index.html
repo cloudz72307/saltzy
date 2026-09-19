@@ -224,63 +224,6 @@
             height: 100%;
             border: none;
         }
-
-        /* Browser Proxy Panel */
-        .proxy-bar {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 14px;
-        }
-
-        .proxy-input {
-            flex-grow: 1;
-            background-color: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 8px 12px;
-            color: var(--text);
-            font-size: 13px;
-            outline: none;
-        }
-
-        .proxy-input:focus {
-            border-color: var(--accent);
-        }
-
-        .proxy-submit {
-            background-color: var(--accent);
-            color: #fff;
-            border: none;
-            padding: 0 16px;
-            border-radius: 6px;
-            font-weight: 500;
-            cursor: pointer;
-            font-size: 13px;
-        }
-
-        .proxy-submit:hover {
-            background-color: var(--accent-hover);
-        }
-
-        .proxy-screen {
-            flex-grow: 1;
-            background-color: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-            display: flex;
-        }
-
-        .proxy-screen iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: #fff;
-        }
-    </style>
-</head>
-<body onload="initProxy()">
-
     <!-- Sidebar Navigation -->
     <aside>
         <div>
@@ -290,14 +233,6 @@
             </div>
             <div class="menu">
                 <button class="menu-btn active" onclick="changeTab('games')">🎮 Games</button>
-                <button class="menu-btn" onclick="changeTab('proxy')">🌐 Browser Proxy</button>
-            </div>
-        </div>
-        <div class="sidebar-info">
-            Scramjet Enabled
-        </div>
-    </aside>
-
     <!-- Main Workspace -->
     <main>
         <!-- Games Grid View -->
