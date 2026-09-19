@@ -311,6 +311,12 @@ async function initNtfyChat() {
    4. UPDATES FEED
 ----------------------------------------------------------- */
 const UPDATES = [
+   {
+    date: "September 19, 2026",
+    tag: "new",
+    title: "Bug Fix #1",
+    desc: "Minor bug on connection with the chat, now it works smoothly and you can actually see messages."
+  },
   {
     date: "September 18, 2026",
     tag: "new",
