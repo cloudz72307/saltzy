@@ -1,16 +1,56 @@
 <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Saltzy salt shaker logo">
-<!-- cap -->
-<path d="M19 14 C19 10.7 21.7 8 25 8 L39 8 C42.3 8 45 10.7 45 14 L46.5 19 L17.5 19 Z" fill="#F5FAFF"/>
-<circle cx="24.5" cy="13.5" r="1.1" fill="#0E3B66"/>
-<circle cx="30" cy="12.5" r="1.1" fill="#0E3B66"/>
-<circle cx="35.5" cy="13.5" r="1.1" fill="#0E3B66"/>
-<circle cx="27" cy="16.5" r="1.1" fill="#0E3B66"/>
-<circle cx="33" cy="16.5" r="1.1" fill="#0E3B66"/>
 
-<!-- body -->
-<path d="M18 19 L46 19 C47.5 26 48.5 33 48.5 41 C48.5 51.5 41 58 32 58 C23 58 15.5 51.5 15.5 41 C15.5 33 16.5 26 18 19 Z"
-      fill="#F5FAFF" stroke="#0E3B66" stroke-width="1.5"/>
+  <!-- cap -->
+  <path
+    d="M19 14
+       C19 10.7 21.7 8 25 8
+       L39 8
+       C42.3 8 45 10.7 45 14
+       L46 19
+       L18 19 Z"
+    fill="#F5FAFF"/>
+
+  <!-- cap middle line -->
+  <path
+    d="M18 19 L46 19"
+    fill="none"
+    stroke="#0E3B66"
+    stroke-width="1.5"
+    stroke-linecap="round"/>
+
+  <!-- salt holes -->
+  <circle cx="23" cy="12.5" r="1.05" fill="#0E3B66"/>
+  <circle cx="27" cy="11.5" r="1.05" fill="#0E3B66"/>
+  <circle cx="32" cy="12" r="1.05" fill="#0E3B66"/>
+  <circle cx="37" cy="11.5" r="1.05" fill="#0E3B66"/>
+  <circle cx="41" cy="12.5" r="1.05" fill="#0E3B66"/>
+
+  <circle cx="25" cy="15.5" r="1.05" fill="#0E3B66"/>
+  <circle cx="29.5" cy="15" r="1.05" fill="#0E3B66"/>
+  <circle cx="34" cy="15" r="1.05" fill="#0E3B66"/>
+  <circle cx="38.5" cy="15.5" r="1.05" fill="#0E3B66"/>
+
+  <!-- body -->
+  <path
+    d="M18 19
+       L46 19
+       C47.5 26 48.5 33 48.5 41
+       C48.5 51.5 41 58 32 58
+       C23 58 15.5 51.5 15.5 41
+       C15.5 33 16.5 26 18 19 Z"
+    fill="#F5FAFF"
+    stroke="#0E3B66"
+    stroke-width="1.5"/>
 
   <!-- glass highlight -->
-  <path d="M22 24 C20.5 30 19.8 36 19.8 41.5 C19.8 47 22 51.5 25.5 54"
-        fill="none" stroke="#BFE4FF" stroke-width="2.4" stroke-linecap="round" opacity="0.7"/>
+  <path
+    d="M22 24
+       C20.5 30 19.8 36 19.8 41.5
+       C19.8 47 22 51.5 25.5 54"
+    fill="none"
+    stroke="#BFE4FF"
+    stroke-width="2.4"
+    stroke-linecap="round"
+    opacity="0.7"/>
+
+</svg>
